@@ -96,6 +96,7 @@ public class DemoResource {
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
     con.setRequestMethod("GET");
     con.setRequestProperty("Accept", "application/json;charset=UTF-8");
+    con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
     con.setRequestProperty("User-Agent", "server"); //remember if you are using SWAPI
     con.setRequestProperty("Access-Control-Allow-Origin", "server");
     Scanner scan = new Scanner(con.getInputStream());
