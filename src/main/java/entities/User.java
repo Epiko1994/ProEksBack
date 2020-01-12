@@ -32,8 +32,8 @@ public class User implements Serializable {
   @ManyToMany
   private List<Role> roleList = new ArrayList();
 
-  @ManyToOne
-  private Menuplan menuplans;
+  /*@ManyToOne
+  private Menuplan menuplans;*/
 
 
 
@@ -89,11 +89,11 @@ public class User implements Serializable {
     roleList.add(userRole);
   }
 
-  public Menuplan getMenuplans() {
+  /*public Menuplan getMenuplans() {
     return menuplans;
   }
 
   public void setMenuplans(Menuplan menuplans) {
     this.menuplans = menuplans;
-  }
+  }*/
 }

@@ -90,10 +90,9 @@ public class DemoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-   // @Path("starwars/{childID}")
-    @Path("recipe/{recipeID}")
-    public String  getSwappiDataPerson(@PathParam("recipeID") int id) throws MalformedURLException, IOException{
-    URL url = new URL("https://swapi.co/api/people/"+id);
+    @Path("recipe")
+    public String  getSwappiDataPerson() throws MalformedURLException, IOException{
+    URL url = new URL("http://46.101.217.16:4000/allRecipes");
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
     con.setRequestMethod("GET");
     con.setRequestProperty("Accept", "application/json;charset=UTF-8");
@@ -110,14 +109,13 @@ public class DemoResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-   // @Path("starwars/{childID}")
-    @Path("starwars/planet/{planetsID}")
-    public String  getSwappiDataPlanets(@PathParam("planetsID") int id) throws MalformedURLException, IOException{
-    URL url = new URL("https://swapi.co/api/planets/"+id);
+    @Path("recipe/{recipeID}")
+    public String  getSwappiDataPlanets(@PathParam("recipeID") String id) throws MalformedURLException, IOException{
+    URL url = new URL("http://46.101.217.16:4000/recipe/"+id);
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
     con.setRequestMethod("GET");
     con.setRequestProperty("Accept", "application/json;charset=UTF-8");
-    con.setRequestProperty("User-Agent", "server"); //remember if you are using SWAPI
+    con.setRequestProperty("User-Agent", "server");
     con.setRequestProperty("Access-Control-Allow-Origin", "server");
     Scanner scan = new Scanner(con.getInputStream());
     String jsonStr = null;
