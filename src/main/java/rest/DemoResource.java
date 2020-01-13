@@ -8,16 +8,10 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -33,8 +27,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-import facades.FacadeExample;
-import facades.UserFacade;
 import utils.EMF_Creator;
 
 @Path("info")
@@ -91,7 +83,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("recipe")
-    public String  getSwappiDataPerson() throws MalformedURLException, IOException{
+    public String  getRecipes() throws MalformedURLException, IOException{
     URL url = new URL("http://46.101.217.16:4000/allRecipes");
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
     con.setRequestMethod("GET");
@@ -111,7 +103,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("recipe/{recipeID}")
-    public String  getSwappiDataPlanets(@PathParam("recipeID") String id) throws MalformedURLException, IOException{
+    public String  getRecipeById(@PathParam("recipeID") String id) throws MalformedURLException, IOException{
     URL url = new URL("http://46.101.217.16:4000/recipe/"+id);
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
     con.setRequestMethod("GET");
@@ -127,19 +119,4 @@ public class DemoResource {
     return jsonStr;
   }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("swapidata")
-    public void getSwapiData(@Suspended final AsyncResponse ar) throws ExecutionException, InterruptedException {
-        ar.setTimeoutHandler(asyncResponse -> asyncResponse.resume(Response.status(Response.Status.SERVICE_UNAVAILABLE).entity("Timeout response too long..").build()));
-        ar.setTimeout(8, TimeUnit.SECONDS);
-        new Thread(() -> {
-            ApiScrapeFacade apiScrapeFacade = new ApiScrapeFacade();
-            try {
-                ar.resume(GSON.toJson(apiScrapeFacade.runParralel()));
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
 }
